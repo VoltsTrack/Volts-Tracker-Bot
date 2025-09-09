@@ -14,7 +14,7 @@ if (!BOT_TOKEN) {
     process.exit(1);
 }
 
-class LVMLabsWalletBot {
+class VoltsTrackWalletBot {
     constructor() {
         // Optimized Telegram bot configuration for cloud hosting
         this.bot = new TelegramBot(BOT_TOKEN, { 
@@ -78,7 +78,7 @@ class LVMLabsWalletBot {
             lastActivation: null
         };
         
-        console.log('🤖 Veyra Labs Wallet Bot initialized');
+        console.log('🤖 VoltsTrack Wallet Bot initialized');
         console.log('🚀 Bot starting...');
         console.log(`⏰ Auto-cleanup after ${this.INACTIVITY_LIMIT / 1000} seconds of inactivity`);
         
@@ -101,7 +101,7 @@ class LVMLabsWalletBot {
             this.updateUserActivity(); // Actualizar actividad
             
             const welcomeMessage = `
-🚀 **Welcome to Veyra Labs Wallet Tracker Bot!**
+🚀 **Welcome to VoltsTrack Wallet Tracker Bot!**
 
 👇 Choose an option below or type commands manually:
             `;
@@ -510,7 +510,7 @@ AI signals are provided for informational purposes only. Past performance does n
             const chatId = msg.chat.id;
             this.updateUserActivity(); // Actualizar actividad
             const helpMessage = `
-🆘 **Help - Veyra Labs Wallet Tracker**
+🆘 **Help - VoltsTrack Wallet Tracker**
 
 **Basic Commands:**
 • \`/track <wallet>\` - Start tracking a Solana wallet
@@ -925,7 +925,7 @@ AI signals are provided for informational purposes only. Past performance does n
     
     handleHelpButton(chatId) {
         const helpMessage = `
-🆘 **Help - Veyra Labs Wallet Tracker**
+🆘 **Help - VoltsTrack Wallet Tracker**
 
 **What this bot does:**
 • 📱 Tracks Solana wallet activity
@@ -1735,5 +1735,5 @@ AI signals are provided for informational purposes only. Past performance does n
 }
 
 // Crear e iniciar el bot
-const bot = new LVMLabsWalletBot();
+const bot = new VoltsTrackWalletBot();
 bot.start();

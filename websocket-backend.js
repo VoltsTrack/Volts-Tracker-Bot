@@ -157,7 +157,7 @@ class HeliusWebSocketBackend {
         this.lastSuccessfulPing = Date.now();
         this.pingInterval = 30000; // 30 seconds
         
-        websocketLogger.success('Veyra Labs Bot initialized', {
+        websocketLogger.success('VoltsTrack Bot initialized', {
             network: this.network,
             apiKeys: this.heliusApiKeys.length,
             rotationInterval: `${this.keyRotationInterval / 1000 / 60}min`,

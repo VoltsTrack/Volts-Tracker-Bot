@@ -1,4 +1,4 @@
-// Sistema de logging optimizado para Veyra Labs Bot
+// Sistema de logging optimizado para VoltsTrack Bot
 // Reemplaza logs verbosos con información concisa y útil
 
 class Logger {
