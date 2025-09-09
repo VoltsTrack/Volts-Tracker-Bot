@@ -1,0 +1,50 @@
+{
+  "name": "voltstrack-telegram-bot",
+  "version": "1.0.0",
+  "description": "Professional Telegram bot to track Solana wallet transactions in real-time. Monitor token swaps, detect buy/sell activities, and get notified instantly about trading activities on your favorite wallets.",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "node --watch bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "dotenv": "^17.2.2",
+    "node-telegram-bot-api": "^0.66.0",
+    "ws": "^8.18.0"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "solana",
+    "wallet",
+    "tracker",
+    "cryptocurrency",
+    "trading",
+    "blockchain",
+    "defi",
+    "memecoin",
+    "pump-fun",
+    "websocket",
+    "helius",
+    "notification",
+    "real-time"
+  ],
+  "author": {
+    "name": "Veyra Labs",
+    "url": "https://github.com/veyralabs"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/veyralabs/voltstrack-telegram-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/veyralabs/voltstrack-telegram-bot/issues"
+  },
+  "homepage": "https://github.com/veyralabs/voltstrack-telegram-bot#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
