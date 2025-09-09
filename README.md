@@ -40,11 +40,11 @@ A professional Telegram bot for real-time tracking of Solana wallet transactions
 - Helius API keys for Solana data access
 
 ### Setup
-
 1. Clone the repository:
+
 ```bash
-git clone https://github.com/yourusername/solana-wallet-tracker-bot.git
-cd solana-wallet-tracker-bot
+git clone https://github.com/VoltsTrack/Volts-Tracker-Bot.git
+cd Volts-Tracker-Bot
 ```
 
 2. Install dependencies:

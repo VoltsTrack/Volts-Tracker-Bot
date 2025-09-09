@@ -33,18 +33,18 @@
     "real-time"
   ],
   "author": {
-    "name": "Veyra Labs",
-    "url": "https://github.com/veyralabs"
+    "name": "VoltsTrack",
+    "url": "https://github.com/VoltsTrack"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/veyralabs/voltstrack-telegram-bot.git"
+    "url": "https://github.com/VoltsTrack/Volts-Tracker-Bot.git"
   },
   "bugs": {
-    "url": "https://github.com/veyralabs/voltstrack-telegram-bot/issues"
+    "url": "https://github.com/VoltsTrack/Volts-Tracker-Bot/issues"
   },
-  "homepage": "https://github.com/veyralabs/voltstrack-telegram-bot#readme",
+  "homepage": "https://github.com/VoltsTrack/Volts-Tracker-Bot#readme",
   "engines": {
     "node": ">=16.0.0"
   }
