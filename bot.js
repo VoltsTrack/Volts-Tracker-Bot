@@ -16,25 +16,38 @@ if (!BOT_TOKEN) {
 
 class LVMLabsWalletBot {
     constructor() {
-        // Inicializar bot de Telegram
-        this.bot = new TelegramBot(BOT_TOKEN, { polling: true });
+        // Optimized Telegram bot configuration for cloud hosting
+        this.bot = new TelegramBot(BOT_TOKEN, { 
+            polling: {
+                interval: 1000, // Reduced polling interval for better responsiveness
+                autoStart: true,
+                params: {
+                    timeout: 30 // Longer timeout for stability
+                }
+            },
+            request: {
+                agentOptions: {
+                    keepAlive: true,
+                    family: 4 // Force IPv4 for better Replit compatibility
+                }
+            }
+        });
         
-        // Inicializar WebSocket backend
+        // Initialize WebSocket backend with optimized settings
         this.websocket = new HeliusWebSocketBackend();
         
-        // Map para guardar usuarios y sus wallets
+        // Memory-optimized data structures
         this.userWallets = new Map(); // telegramId -> Set(wallets)
-        
-        // Map para rastrear IDs de mensajes del bot para poder eliminarlos
         this.botMessageIds = new Map(); // telegramId -> Array(messageIds)
         
-        // Sistema de auto-limpieza por inactividad
+        // Enhanced inactivity system for cloud hosting
         this.lastUserActivity = Date.now();
         this.inactivityTimeout = null;
-        this.INACTIVITY_LIMIT = 300000; // 5 minutos (300000 ms)
+        this.INACTIVITY_LIMIT = parseInt(process.env.INACTIVITY_LIMIT) || 300000;
         
-        // Límite de wallets por usuario
-        this.MAX_WALLETS_PER_USER = 3;
+        // Configurable limits for resource management
+        this.MAX_WALLETS_PER_USER = parseInt(process.env.MAX_WALLETS_PER_USER) || 3;
+        this.MAX_MESSAGES_PER_USER = 50; // Limit stored message IDs for memory management
         
         // Advanced Settings System (Professional Features)
         this.userSettings = new Map(); // telegramId -> settings object
@@ -1503,21 +1516,27 @@ AI signals are provided for informational purposes only. Past performance does n
         this.sendAndTrackMessage(chatId, configMessage, { parse_mode: 'Markdown' });
     }
 
-    // Método para enviar mensajes y rastrear sus IDs
+    // Método para enviar mensajes y rastrear sus IDs (optimizado para Replit)
     async sendAndTrackMessage(chatId, message, options = {}) {
         try {
             const sentMessage = await this.bot.sendMessage(chatId, message, options);
             
-            // Guardar el ID del mensaje para poder eliminarlo después
+            // Optimized message ID tracking for cloud hosting
             if (!this.botMessageIds.has(chatId)) {
                 this.botMessageIds.set(chatId, []);
             }
-            this.botMessageIds.get(chatId).push(sentMessage.message_id);
             
-            // Limitar a los últimos 50 mensajes para evitar usar demasiada memoria
             const messageIds = this.botMessageIds.get(chatId);
-            if (messageIds.length > 50) {
-                messageIds.splice(0, messageIds.length - 50);
+            messageIds.push(sentMessage.message_id);
+            
+            // Memory optimization: Keep only recent messages
+            if (messageIds.length > this.MAX_MESSAGES_PER_USER) {
+                messageIds.splice(0, messageIds.length - this.MAX_MESSAGES_PER_USER);
+            }
+            
+            // Periodic cleanup of old message IDs for memory efficiency
+            if (messageIds.length % 10 === 0) {
+                this.cleanupOldMessageIds();
             }
             
             return sentMessage;
@@ -1621,6 +1640,27 @@ AI signals are provided for informational purposes only. Past performance does n
             total += walletSet.size;
         });
         return total;
+    }
+    
+    // Memory cleanup for message IDs (cloud optimization)
+    cleanupOldMessageIds() {
+        let totalCleaned = 0;
+        this.botMessageIds.forEach((messageIds, chatId) => {
+            if (messageIds.length > this.MAX_MESSAGES_PER_USER * 2) {
+                const cleaned = messageIds.length - this.MAX_MESSAGES_PER_USER;
+                messageIds.splice(0, cleaned);
+                totalCleaned += cleaned;
+            }
+        });
+        
+        if (totalCleaned > 0) {
+            console.log(`🧹 Memory cleanup: Removed ${totalCleaned} old message IDs`);
+        }
+    }
+    
+    // Alias for validation compatibility
+    cleanupOldMessages() {
+        return this.cleanupOldMessageIds();
     }
     
     // Manejar la limpieza por inactividad

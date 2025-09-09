@@ -1,0 +1,15 @@
+modules = ["nodejs-20"]
+
+[nix]
+channel = "stable-23_05"
+
+[deployment]
+run = ["node", "main.js"]
+deploymentTarget = "cloudrun"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[env]
+NODE_ENV = "production"

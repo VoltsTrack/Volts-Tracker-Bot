@@ -102,7 +102,7 @@ class TransactionFilters {
 
 class HeliusWebSocketBackend {
     constructor() {
-        // Sistema de rotación de API keys - Load from environment variables
+        // Load environment-based configuration
         const apiKeysEnv = process.env.HELIUS_API_KEYS;
         if (!apiKeysEnv) {
             throw new Error('HELIUS_API_KEYS environment variable is required');
@@ -115,35 +115,47 @@ class HeliusWebSocketBackend {
                 throw new Error(`Invalid Helius API key at index ${index}: ${key.substring(0, 8)}...`);
             }
         });
-        this.currentApiKeyIndex = 0;
-        this.keyRotationInterval = 15 * 60 * 1000; // 15 minutos
-        this.callsPerKey = 0;
-        this.maxCallsPerRotation = 100;
         
-        this.network = 'mainnet';
+        // Cloud-optimized configuration
+        this.currentApiKeyIndex = 0;
+        this.keyRotationInterval = parseInt(process.env.API_ROTATION_INTERVAL) || 900000; // 15 minutes
+        this.callsPerKey = 0;
+        this.maxCallsPerRotation = parseInt(process.env.MAX_CALLS_PER_ROTATION) || 100;
+        
+        // Network and connection settings
+        this.network = process.env.SOLANA_NETWORK || 'mainnet';
         this.websocket = null;
         this.trackedWallets = new Set();
         this.isConnected = false;
+        
+        // Enhanced reconnection logic for cloud hosting
         this.reconnectAttempts = 0;
-        this.maxReconnectAttempts = 5;
-        this.reconnectDelay = 1000;
+        this.maxReconnectAttempts = parseInt(process.env.RECONNECT_ATTEMPTS) || 5;
+        this.reconnectDelay = parseInt(process.env.RECONNECT_DELAY) || 1000;
+        this.connectionHealthCheck = null;
         
-        // Cache para información de tokens
+        // Memory-optimized cache management
         this.tokenInfoCache = new Map();
-        this.cacheExpiry = 5 * 60 * 1000; // 5 minutos
+        this.cacheExpiry = parseInt(process.env.CACHE_EXPIRY) || 300000; // 5 minutes
+        this.maxCacheSize = 1000; // Limit cache size for memory efficiency
         
-        // Rate limiting - Respeta límites de Helius
+        // Enhanced rate limiting for cloud hosting
         this.enhancedTransactionQueue = [];
         this.assetBatchQueue = [];
         this.lastEnhancedCall = 0;
         this.lastAssetBatchCall = 0;
-        this.rateLimitDelay = 1200; // 1.2 segundos
+        this.rateLimitDelay = parseInt(process.env.RATE_LIMIT_DELAY) || 1200;
         
-        // Filtros de transacciones
+        // Transaction filters
         this.filters = new TransactionFilters();
         
-        // Callback para notificar transacciones
+        // Callback for transaction notifications
         this.onTransactionReceived = null;
+        
+        // Connection stability monitoring
+        this.connectionTimeouts = [];
+        this.lastSuccessfulPing = Date.now();
+        this.pingInterval = 30000; // 30 seconds
         
         websocketLogger.success('Veyra Labs Bot initialized', {
             network: this.network,
