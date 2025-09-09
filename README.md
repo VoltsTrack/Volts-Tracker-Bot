@@ -2,6 +2,8 @@
 
 A professional Telegram bot for real-time tracking of Solana wallet transactions with advanced filtering and notification systems.
 
+> **Built by VoltsTrack** - Professional Solana transaction monitoring solution
+
 ## Features
 
 - **Real-time Transaction Monitoring**: Track Solana wallet activities instantly using WebSocket connections
